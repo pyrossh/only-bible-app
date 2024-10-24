@@ -18,7 +18,6 @@ fun VerseHeading(
     fontType: FontType,
     fontSizeDelta: Int,
 ) {
-//    val view = LocalView.current
     val navController = LocalNavController.current
     Text(
         modifier = Modifier.padding(bottom = 12.dp),

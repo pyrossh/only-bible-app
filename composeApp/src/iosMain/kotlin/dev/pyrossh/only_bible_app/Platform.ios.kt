@@ -5,6 +5,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.pyrossh.only_bible_app.config.BuildKonfig
 import dev.pyrossh.only_bible_app.domain.Verse
 import platform.UIKit.UIScreen
 //import platform.AVKit.Audio
@@ -26,4 +27,18 @@ actual fun playClickSound() {
 }
 
 actual fun shareVerses(verses: List<Verse>) {
+}
+
+actual object SpeechService {
+    actual fun init(onStarted: () -> Unit, onEnded: () -> Unit) {
+    }
+
+    actual fun dispose(onStarted: () -> Unit, onEnded: () -> Unit) {
+    }
+
+    actual fun startTextToSpeech(voiceName: String, text: String) {
+    }
+
+    actual fun stopTextToSpeech() {
+    }
 }
