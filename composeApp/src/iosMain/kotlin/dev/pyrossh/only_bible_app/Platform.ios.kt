@@ -1,13 +1,19 @@
 package dev.pyrossh.only_bible_app
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.pyrossh.only_bible_app.config.BuildKonfig
 import dev.pyrossh.only_bible_app.domain.Verse
 import platform.UIKit.UIScreen
+import theme.darkScheme
+import theme.lightScheme
+
 //import platform.AVKit.Audio
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -26,7 +32,14 @@ actual fun playClickSound() {
 //    AudioServicesPlayAlertSound(SystemSoundID(1322))
 }
 
-actual fun shareVerses(verses: List<Verse>) {
+@Composable
+actual fun  rememberShareVerses(): (verses: List<Verse>) -> Unit {
+    return { verses ->
+    }
+}
+
+@Composable
+actual fun onThemeChange(themeType: ThemeType) {
 }
 
 actual object SpeechService {

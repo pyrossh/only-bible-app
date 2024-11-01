@@ -66,16 +66,18 @@ class SimpleParser(val input: CharSequence) {
             skip(4)
             return TagNode(Pos(start, cursor), "br")
         }
-        for (t in listOf("red", "yellow", "em")) {
+        for (t in listOf("red", "yellow")) {
             if (input.substring(start, start + 2 + t.length) == "<$t>") {
-                val redNode = TagNode(Pos(start, 0), t)
                 skip(t.length + 2)
                 val textNode = parseTextNode()
                 if (input.substring(textNode.pos.end, textNode.pos.end + t.length + 3) == "</$t>") {
                     skip(t.length + 3)
-                    redNode.pos = Pos(start, textNode.pos.end + t.length + 3)
-                    redNode.child = textNode
-                    return redNode
+                    return TagNode(
+                        Pos(start, textNode.pos.end + t.length + 3),
+                        t,
+                        emptyMap(),
+                        textNode
+                    )
                 } else {
                     throw RuntimeException(
                         "failed find closing tag for <red> at ${textNode.pos.end} ${
@@ -89,6 +91,57 @@ class SimpleParser(val input: CharSequence) {
             }
         }
 
+        if (input.substring(start, start + 2) == "<a") {
+            skip(2)
+            val attrs = parseAttributes()
+            if (consume() != '>') {
+                throw RuntimeException("failed to parseTag 'a' close '>'")
+            }
+            val textNode = parseTextNode()
+            if (input.substring(textNode.pos.end, textNode.pos.end + 4) == "</a>") {
+                skip(4)
+                return TagNode(Pos(start, textNode.pos.end + 4), "a", attrs, textNode)
+            } else {
+                throw RuntimeException(
+                    "failed find closing tag for <a> ${textNode.pos.end}"
+                )
+            }
+        }
+
         throw RuntimeException("failed to parseTag at $start ${input.substring(start, start + 10)}")
+    }
+
+    private fun parseAttributes(): Map<String, String> {
+        val start = cursor
+        val key = StringBuilder()
+        while (hasNext() && peek() != '=') {
+            while (peek() == ' ') {
+                skip()
+            }
+            key.append(consume())
+        }
+        skip()
+        while (peek() == ' ') {
+            skip()
+        }
+        val value = parseString()
+        if (peek() == '>') {
+            return mapOf(Pair(key.toString(), value))
+        }
+        throw RuntimeException("failed to parseAttribute at $start")
+    }
+
+    private fun parseString(): String {
+        val start = cursor
+        val result = StringBuilder()
+        if (consume() != '"') {
+            throw RuntimeException("failed to parseAttribute at ${start + 1}")
+        }
+
+        while (hasNext() && peek() != '"') {
+            result.append(consume())
+        }
+        skip()
+        return result.toString()
     }
 }

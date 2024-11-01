@@ -43,6 +43,7 @@ import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.IntOffset
@@ -58,6 +59,9 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import dev.pyrossh.only_bible_app.lightHighlights
 import dev.pyrossh.only_bible_app.rememberShareVerses
+import dev.pyrossh.only_bible_app.utils.SimpleParser
+import dev.pyrossh.only_bible_app.utils.TagNode
+import dev.pyrossh.only_bible_app.utils.TextNode
 import utils.LocalNavController
 
 @Composable
@@ -78,15 +82,15 @@ fun VerseText(
     val isSelected = selectedVerses.contains(verse)
     val highlightedColorIndex = model.getHighlightForVerse(verse)
     val currentHighlightColors = if (isLight) lightHighlights else darkHighlights
-    val currentHighlightWordKey = if (isLight) "background" else "color"
     val text = if (highlightWord != null)
         verse.text.replace(
             highlightWord,
-            "<span style=\"${currentHighlightWordKey}: yellow;\">${highlightWord}</span>",
+            "<yellow>${highlightWord}</yellow>",
             true
         )
     else
         verse.text
+    val nodes = SimpleParser(text).parse()
     Text(
         modifier = Modifier
             .onPlaced {
@@ -141,22 +145,29 @@ fun VerseText(
             ) {
                 append("${verse.verseIndex + 1} ")
             }
-            append(text)
-//            append(
-//                AnnotatedString.Companion.fromHtml(
-//                    htmlString = text,
-//                    linkStyles = TextLinkStyles(
-//                        style = SpanStyle(
-//                            fontSize = (14 + model.fontSizeDelta).sp,
-//                            fontStyle = FontStyle.Italic,
-//                            color = Color(0xFF008AE6),
-//                        )
-//                    ),
-//                    linkInteractionListener = {
-//                        println("SOUTT ${(it as LinkAnnotation.Url).url}")
-//                    },
-//                )
-//            )
+            for (n in nodes) {
+                if (n is TextNode) {
+                    append(n.value)
+                } else if (n is TagNode && n.name == "br") {
+                    append("\n")
+                } else if (n is TagNode && n.name == "red") {
+                    withStyle(
+                        style = SpanStyle(
+                            color = Color.Red,
+                        )
+                    ) {
+                        append(n.child!!.value)
+                    }
+                } else if (n is TagNode && n.name == "yellow") {
+                    withStyle(
+                        style = SpanStyle(
+                            background = Color.Yellow,
+                        )
+                    ) {
+                        append(n.child!!.value)
+                    }
+                }
+            }
         }
     )
     if (isSelected && selectedVerses.last() == verse) {
