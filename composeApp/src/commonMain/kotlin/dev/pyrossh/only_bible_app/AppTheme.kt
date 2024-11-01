@@ -50,33 +50,9 @@ fun AppTheme(
     themeType: ThemeType,
     content: @Composable () -> Unit
 ) {
-//    val context = LocalContext.current as ComponentActivity
     val isLight = isLightTheme(themeType, isSystemInDarkTheme())
     val colorScheme = if (isLight) lightScheme else darkScheme
-    LaunchedEffect(key1 = themeType) {
-//        context.enableEdgeToEdge(
-//            statusBarStyle = if (isLight) {
-//                SystemBarStyle.light(
-//                    colorScheme.background.toArgb(),
-//                    colorScheme.onBackground.toArgb()
-//                )
-//            } else {
-//                SystemBarStyle.dark(
-//                    colorScheme.background.toArgb(),
-//                )
-//            },
-//            navigationBarStyle = if (isLight) {
-//                SystemBarStyle.light(
-//                    colorScheme.background.toArgb(),
-//                    colorScheme.onBackground.toArgb()
-//                )
-//            } else {
-//                SystemBarStyle.dark(
-//                    colorScheme.background.toArgb(),
-//                )
-//            }
-//        )
-    }
+    onThemeChange(themeType)
     MaterialTheme(
         colorScheme = colorScheme,
         content = content

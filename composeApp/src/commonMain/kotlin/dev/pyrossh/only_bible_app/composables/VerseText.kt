@@ -57,7 +57,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import dev.pyrossh.only_bible_app.lightHighlights
-import dev.pyrossh.only_bible_app.shareVerses
+import dev.pyrossh.only_bible_app.rememberShareVerses
 import utils.LocalNavController
 
 @Composable
@@ -179,6 +179,7 @@ private fun Menu(
     val navController = LocalNavController.current
     val scope = rememberCoroutineScope()
     val selectedVerses by model.selectedVerses.collectAsState()
+    val shareVerses = rememberShareVerses()
     Popup(
         alignment = Alignment.TopCenter,
         offset = IntOffset(0, y = barYPosition),
@@ -263,7 +264,9 @@ private fun Menu(
                 IconButton(onClick = {
 //                    view.playSoundEffect(SoundEffectConstants.CLICK)
                     shareVerses(
-                        selectedVerses.sortedBy { it.verseIndex })
+                        selectedVerses.sortedBy { it.verseIndex },
+                    )
+                    model.setSelectedVerses(listOf())
                 }) {
                     Icon(
 //                            modifier = Modifier.size(32.dp),
