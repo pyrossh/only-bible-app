@@ -141,7 +141,7 @@ fun VerseText(
             ) {
                 append("${verse.verseIndex + 1} ")
             }
-            append(verse.text)
+            append(text)
 //            append(
 //                AnnotatedString.Companion.fromHtml(
 //                    htmlString = text,

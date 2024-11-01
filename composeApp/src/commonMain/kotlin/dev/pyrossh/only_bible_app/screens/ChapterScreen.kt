@@ -48,7 +48,7 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import utils.LocalNavController
-import utils.detectSwipe
+import dev.pyrossh.only_bible_app.utils.detectSwipe
 import utils.getBackwardPair
 import utils.getForwardPair
 

@@ -1,4 +1,4 @@
-package utils
+package dev.pyrossh.only_bible_app.utils
 
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.runtime.MutableIntState

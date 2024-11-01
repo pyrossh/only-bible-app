@@ -1,4 +1,5 @@
 package dev.pyrossh.only_bible_app
+
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -21,7 +22,9 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.int
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
@@ -176,14 +179,15 @@ class AppViewModel : ViewModel() {
     }
 
     fun addHighlightedVerses(verses: List<Verse>, colorIndex: Int) {
-        verses.forEach { v ->
-            highlightedVerses.value + (v.id to colorIndex)
-        }
+        highlightedVerses.value = JsonObject(
+            highlightedVerses.value + verses.associateBy({ it.id },
+                { JsonPrimitive(colorIndex) })
+        )
     }
 
     fun removeHighlightedVerses(verses: List<Verse>) {
-        verses.forEach { v ->
-            highlightedVerses.value - v.id
-        }
+        highlightedVerses.value = JsonObject(
+            highlightedVerses.value.filterKeys { !verses.map { v -> v.id }.contains(it) }
+        )
     }
 }
