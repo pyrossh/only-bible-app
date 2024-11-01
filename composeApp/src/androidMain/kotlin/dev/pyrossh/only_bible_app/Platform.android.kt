@@ -1,5 +1,7 @@
 package dev.pyrossh.only_bible_app
 
+import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.view.SoundEffectConstants
 import androidx.activity.ComponentActivity
@@ -32,27 +34,28 @@ actual fun getScreenHeight(): Dp = LocalConfiguration.current.screenHeightDp.dp
 @Composable
 actual fun playClickSound() = LocalView.current.playSoundEffect(SoundEffectConstants.CLICK)
 
-@Composable
-actual fun  rememberShareVerses(): (verses: List<Verse>) -> Unit {
-    val context = LocalContext.current
-    return { verses ->
-        val versesThrough =
-            if (verses.size >= 3) "${verses.first().verseIndex + 1}-${verses.last().verseIndex + 1}" else verses.map { it.verseIndex + 1 }
-                .joinToString(",")
-        val title = "${verses[0].bookName} ${verses[0].chapterIndex + 1}:${versesThrough}"
-        val text = verses.joinToString("\n") {
-            it.text.replace("<span style=\"color:red;\">", "")
-                .replace("<em>", "")
-                .replace("</span>", "")
-                .replace("</em>", "")
-        }
-        val sendIntent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, "${title}\n${text}")
+
+actual object ShareKit {
+
+    private var activityProvider: () -> Activity = {
+        throw IllegalArgumentException(
+            "You need to implement the 'activityProvider' to provide the required Activity. " +
+                    "Just make sure to set a valid activity using " +
+                    "the 'setActivityProvider()' method."
+        )
+    }
+
+    fun setActivityProvider(provider: () -> Activity) {
+        activityProvider = provider
+    }
+
+    actual fun shareText(text: String) {
+        val intent = Intent(Intent.ACTION_SEND).apply {
             type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, text)
         }
-        val shareIntent = Intent.createChooser(sendIntent, null)
-        context.startActivity(shareIntent)
+        val intentChooser = Intent.createChooser(intent, null)
+        activityProvider.invoke().startActivity(intentChooser)
     }
 }
 

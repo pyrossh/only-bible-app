@@ -10,6 +10,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.pyrossh.only_bible_app.config.BuildKonfig
 import dev.pyrossh.only_bible_app.domain.Verse
+import platform.UIKit.UIActivityViewController
+import platform.UIKit.UIApplication
 import platform.UIKit.UIScreen
 import theme.darkScheme
 import theme.lightScheme
@@ -32,9 +34,16 @@ actual fun playClickSound() {
 //    AudioServicesPlayAlertSound(SystemSoundID(1322))
 }
 
-@Composable
-actual fun  rememberShareVerses(): (verses: List<Verse>) -> Unit {
-    return { verses ->
+actual object ShareKit {
+
+    actual fun shareText(text: String) {
+        val currentViewController = UIApplication.sharedApplication().keyWindow?.rootViewController
+        val activityViewController = UIActivityViewController(listOf(text), null)
+        currentViewController?.presentViewController(
+            viewControllerToPresent = activityViewController,
+            animated = true,
+            completion = null
+        )
     }
 }
 

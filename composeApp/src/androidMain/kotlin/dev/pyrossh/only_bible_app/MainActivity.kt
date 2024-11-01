@@ -19,8 +19,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         enableEdgeToEdge()
+        ShareKit.setActivityProvider { return@setActivityProvider this }
         if (savedInstanceState == null) {
             lifecycleScope.launch {
                 model.loadData(settings)

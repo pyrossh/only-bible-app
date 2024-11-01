@@ -15,8 +15,9 @@ expect fun getScreenHeight(): Dp
 @Composable
 expect fun playClickSound()
 
-@Composable
-expect fun rememberShareVerses(): (verses: List<Verse>) -> Unit
+expect object ShareKit {
+    fun shareText(text: String)
+}
 
 @Composable
 expect fun onThemeChange(themeType: ThemeType)

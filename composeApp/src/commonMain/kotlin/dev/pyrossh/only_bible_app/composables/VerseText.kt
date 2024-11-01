@@ -50,6 +50,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
+import dev.pyrossh.only_bible_app.ShareKit
 import dev.pyrossh.only_bible_app.SpeechService
 import dev.pyrossh.only_bible_app.darkHighlights
 import dev.pyrossh.only_bible_app.domain.Verse
@@ -58,7 +59,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import dev.pyrossh.only_bible_app.lightHighlights
-import dev.pyrossh.only_bible_app.rememberShareVerses
 import dev.pyrossh.only_bible_app.utils.SimpleParser
 import dev.pyrossh.only_bible_app.utils.TagNode
 import dev.pyrossh.only_bible_app.utils.TextNode
@@ -190,7 +190,6 @@ private fun Menu(
     val navController = LocalNavController.current
     val scope = rememberCoroutineScope()
     val selectedVerses by model.selectedVerses.collectAsState()
-    val shareVerses = rememberShareVerses()
     Popup(
         alignment = Alignment.TopCenter,
         offset = IntOffset(0, y = barYPosition),
@@ -274,9 +273,17 @@ private fun Menu(
                 }
                 IconButton(onClick = {
 //                    view.playSoundEffect(SoundEffectConstants.CLICK)
-                    shareVerses(
-                        selectedVerses.sortedBy { it.verseIndex },
-                    )
+                    val verses = selectedVerses.sortedBy { it.verseIndex }
+                    val versesThrough =
+                        if (verses.size >= 3) "${verses.first().verseIndex + 1}-${verses.last().verseIndex + 1}" else verses.map { it.verseIndex + 1 }
+                            .joinToString(",")
+                    val title =
+                        "${verses[0].bookName} ${verses[0].chapterIndex + 1}:${versesThrough}"
+                    val text = verses.joinToString("\n") {
+                        it.text.replace("<red>", "")
+                            .replace("</red>", "")
+                    }
+                    ShareKit.shareText("$title\n$text")
                     model.setSelectedVerses(listOf())
                 }) {
                     Icon(
