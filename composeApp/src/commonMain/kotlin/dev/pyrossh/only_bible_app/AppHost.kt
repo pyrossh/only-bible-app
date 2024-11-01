@@ -3,7 +3,6 @@ package dev.pyrossh.only_bible_app
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.navigation.compose.NavHost
@@ -20,7 +19,6 @@ fun AppHost(
     model: AppViewModel
 ) {
     val navController = rememberNavController()
-    Text("Failed to load data")
     if (!model.isLoading) {
         CompositionLocalProvider(LocalNavController provides navController) {
             NavHost(
