@@ -17,11 +17,10 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlinx.serializer)
     alias(libs.plugins.buildkonfig)
-    alias(libs.plugins.kotlinCocoapods)
+//    alias(libs.plugins.kotlinCocoapods)
 }
 
 kotlin {
-    iosArm64()
 
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -30,13 +29,13 @@ kotlin {
         }
     }
 
-    cocoapods {
-        version = "1.15.2"
-        ios.deploymentTarget = "13.5"
+//    cocoapods {
+//        version = "1.15.2"
+//        ios.deploymentTarget = "13.5"
 //        pod("MicrosoftCognitiveServicesSpeech-iOS") {
 //            version = "1.40"
 //        }
-    }
+//    }
     
     listOf(
         iosX64(),
@@ -100,25 +99,25 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    signingConfigs {
-        create("release") {
-            keyAlias = keystoreProperties["keyAlias"] as String
-            keyPassword = keystoreProperties["keyPassword"] as String
-            storeFile = file(keystoreProperties["storeFile"] as String)
-            storePassword = keystoreProperties["storePassword"] as String
-        }
-    }
-    buildTypes {
-        release {
-            signingConfig = signingConfigs.getByName("release")
-            isMinifyEnabled = true
-            isShrinkResources = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
+//    signingConfigs {
+//        create("release") {
+//            keyAlias = keystoreProperties["keyAlias"] as String
+//            keyPassword = keystoreProperties["keyPassword"] as String
+//            storeFile = file(keystoreProperties["storeFile"] as String)
+//            storePassword = keystoreProperties["storePassword"] as String
+//        }
+//    }
+//    buildTypes {
+//        release {
+//            signingConfig = signingConfigs.getByName("release")
+//            isMinifyEnabled = true
+//            isShrinkResources = true
+//            proguardFiles(
+//                getDefaultProguardFile("proguard-android-optimize.txt"),
+//                "proguard-rules.pro"
+//            )
+//        }
+//    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
