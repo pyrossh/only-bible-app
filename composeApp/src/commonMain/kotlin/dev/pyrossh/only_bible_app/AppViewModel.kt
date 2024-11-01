@@ -10,7 +10,7 @@ import com.russhwolf.settings.Settings
 import dev.pyrossh.only_bible_app.domain.Bible
 import dev.pyrossh.only_bible_app.domain.Verse
 import dev.pyrossh.only_bible_app.domain.bibles
-import example1.composeapp.generated.resources.Res
+import dev.pyrossh.only_bible_app.resources.Res
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.IO
@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.int

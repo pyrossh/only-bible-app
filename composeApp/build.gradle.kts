@@ -131,6 +131,12 @@ android {
     }
 }
 
+compose.resources {
+    publicResClass = true
+    packageOfResClass = "${pkgName}.resources"
+    generateResClass = auto
+}
+
 @Suppress("TooGenericExceptionCaught")
 configure<BuildKonfigExtension> {
     packageName = "${pkgName}.config"

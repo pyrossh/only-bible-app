@@ -1,4 +1,4 @@
-rootProject.name = "Example1"
+rootProject.name = "only_bible_app"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
