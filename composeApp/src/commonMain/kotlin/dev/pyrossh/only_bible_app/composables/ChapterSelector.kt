@@ -33,7 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import dev.pyrossh.only_bible_app.ChapterScreenProps
+import dev.pyrossh.only_bible_app.screens.ChapterScreenProps
 import dev.pyrossh.only_bible_app.domain.Bible
 import dev.pyrossh.only_bible_app.domain.chapterSizes
 import dev.pyrossh.only_bible_app.domain.engTitles

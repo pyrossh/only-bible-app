@@ -1,7 +1,7 @@
 package dev.pyrossh.only_bible_app.composables
 
 import dev.pyrossh.only_bible_app.AppViewModel
-import dev.pyrossh.only_bible_app.ChapterScreenProps
+import dev.pyrossh.only_bible_app.screens.ChapterScreenProps
 import dev.pyrossh.only_bible_app.FontType
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable

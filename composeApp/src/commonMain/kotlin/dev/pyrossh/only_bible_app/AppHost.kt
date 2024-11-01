@@ -10,6 +10,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import dev.pyrossh.only_bible_app.screens.ChapterScreen
+import dev.pyrossh.only_bible_app.screens.ChapterScreenProps
+import dev.pyrossh.only_bible_app.screens.Dir
 import utils.LocalNavController
 
 @Composable

@@ -16,16 +16,16 @@ data class Bible(
 var bibles = listOf(
     Bible("en", "English", "KJV",  "en-GB-RyanNeural", "Text Settings"),
     Bible("en", "English", "BSB", "en-GB-RyanNeural", "Text Settings"),
-    Bible("bn", "Bengali", "", "bn-IN-TanishaaNeural", "সেটিংস"),
-    Bible("gu", "Gujarati", "", "gu-IN-DhwaniNeural", "સેટિંગ્સ"),
-    Bible("hi", "Hindi", "", "hi-IN-SwaraNeural", "समायोजन"),
-    Bible("kn", "Kannada", "", "kn-IN-GaganNeural", "ಸಂಯೋಜನೆಗಳು"),
-    Bible("ml", "Malayalam", "", "ml-IN-SobhanaNeural", "ക്രമീകരണങ്ങൾ"),
-    Bible("ne", "Nepali", "", "ne-NP-HemkalaNeural", "सेटिङहरू"),
-    Bible("or", "Odia", "", "or-IN-SubhasiniNeural", "ସେଟିଂସମୂହ"),
-    Bible("pa", "Punjabi", "", "pa-IN-OjasNeural", "ਸੈਟਿੰਗਾਂ"),
-    Bible("ta", "Tamil", "", "ta-IN-PallaviNeural", "அமைப்புகள்"),
-    Bible("te", "Telugu", "", "te-IN-ShrutiNeural", "సెట్టింగ్\\\\u200Cలు"),
+    Bible("bn", "Bengali", "বাংলা", "bn-IN-TanishaaNeural", "সেটিংস"),
+    Bible("gu", "Gujarati", "ગુજરાતી", "gu-IN-DhwaniNeural", "સેટિંગ્સ"),
+    Bible("hi", "Hindi", "हिन्दी", "hi-IN-SwaraNeural", "समायोजन"),
+    Bible("kn", "Kannada", "ಕನ್ನಡ", "kn-IN-GaganNeural", "ಸಂಯೋಜನೆಗಳು"),
+    Bible("ml", "Malayalam", "മലയാളം", "ml-IN-SobhanaNeural", "ക്രമീകരണങ്ങൾ"),
+    Bible("ne", "Nepali", "नेपाली", "ne-NP-HemkalaNeural", "सेटिङहरू"),
+    Bible("or", "Odia", "ଓଡ଼ିଆ", "or-IN-SubhasiniNeural", "ସେଟିଂସମୂହ"),
+    Bible("pa", "Punjabi", "ਪੰਜਾਬੀ", "pa-IN-OjasNeural", "ਸੈਟਿੰਗਾਂ"),
+    Bible("ta", "Tamil", "தமிழ்", "ta-IN-PallaviNeural", "அமைப்புகள்"),
+    Bible("te", "Telugu", "తెలుగు", "te-IN-ShrutiNeural", "సెట్టింగ్\\\\u200Cలు"),
 )
 
 const val BOOKS_COUNT = 66;
