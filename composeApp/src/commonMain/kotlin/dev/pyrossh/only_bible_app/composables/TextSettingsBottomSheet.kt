@@ -254,10 +254,6 @@ fun TextSettingsBottomSheet(
                             scope.launch {
                                 onDismiss()
                                 model.themeType = it
-//                                android:configChanges="uiMode"
-//                                min API 31
-//                                val uiModeManager = context.getSystemService(UI_MODE_SERVICE) as UiModeManager
-//                                uiModeManager.setApplicationNightMode(UiModeManager.MODE_NIGHT_AUTO)
                             }
                         }
                     ) {
