@@ -15,7 +15,7 @@
 .externalNativeBuild
 .cxx
 local.properties
-keystore.properties
+secrets.properties
 upload-keystore.jks
 svc.json
 node_modules

@@ -5,10 +5,10 @@ import com.codingfeline.buildkonfig.gradle.BuildKonfigExtension
 import org.jetbrains.kotlin.konan.properties.Properties
 import java.io.FileInputStream
 
-val keystorePropertiesFile = rootProject.file("keystore.properties")
-val keystoreProperties = Properties()
-keystoreProperties.load(FileInputStream(keystorePropertiesFile))
-val pkgName = "dev.pyrossh.only_bible_app" //"dev.pyrossh.onlyBible"
+val secretProperties = Properties().apply {
+    load(FileInputStream(rootProject.file("secrets.properties")))
+}
+val pkgName = "dev.pyrossh.only_bible_app"
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -88,36 +88,36 @@ android {
     sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 
     defaultConfig {
-        applicationId = pkgName
-        minSdk = 31
+        applicationId = "sh.pyros.only_bible_app"
+        minSdk = 30
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 13
+        versionName = "2.0.0"
     }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-//    signingConfigs {
-//        create("release") {
-//            keyAlias = keystoreProperties["keyAlias"] as String
-//            keyPassword = keystoreProperties["keyPassword"] as String
-//            storeFile = file(keystoreProperties["storeFile"] as String)
-//            storePassword = keystoreProperties["storePassword"] as String
-//        }
-//    }
-//    buildTypes {
-//        release {
-//            signingConfig = signingConfigs.getByName("release")
-//            isMinifyEnabled = true
-//            isShrinkResources = true
-//            proguardFiles(
-//                getDefaultProguardFile("proguard-android-optimize.txt"),
-//                "proguard-rules.pro"
-//            )
-//        }
-//    }
+    signingConfigs {
+        create("release") {
+            keyAlias = secretProperties["KEY_ALIAS"] as String
+            keyPassword = secretProperties["KEY_PASSWORD"] as String
+            storeFile = file(secretProperties["STORE_PASSWORD"] as String)
+            storePassword = secretProperties["STORE_FILE"] as String
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig = signingConfigs.getByName("release")
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -139,14 +139,11 @@ compose.resources {
 @Suppress("TooGenericExceptionCaught")
 configure<BuildKonfigExtension> {
     packageName = "${pkgName}.config"
-    val props = Properties().apply {
-        load(file("../local.properties").inputStream())
-    }
     defaultConfigs {
         buildConfigField(
             Type.STRING,
             "SUBSCRIPTION_KEY",
-            props["SUBSCRIPTION_KEY"]?.toString() ?: ""
+            secretProperties["SUBSCRIPTION_KEY"]?.toString() ?: ""
         )
         buildConfigField(
             Type.STRING,
