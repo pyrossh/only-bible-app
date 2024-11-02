@@ -50,10 +50,12 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
+import dev.pyrossh.only_bible_app.Platform
 import dev.pyrossh.only_bible_app.ShareKit
 import dev.pyrossh.only_bible_app.SpeechService
 import dev.pyrossh.only_bible_app.darkHighlights
 import dev.pyrossh.only_bible_app.domain.Verse
+import dev.pyrossh.only_bible_app.getPlatform
 import dev.pyrossh.only_bible_app.isLightTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -250,26 +252,28 @@ private fun Menu(
                         )
                     }
                 }
-                IconButton(onClick = {
+                if (getPlatform() == Platform.Android) {
+                    IconButton(onClick = {
 //                    view.playSoundEffect(SoundEffectConstants.CLICK)
-                    if (model.isAudioPlaying) {
-                        SpeechService.stopTextToSpeech()
-                    } else {
-                        scope.launch(Dispatchers.IO) {
-                            for (v in selectedVerses.sortedBy { it.verseIndex }) {
-                                SpeechService.startTextToSpeech(model.bible.voiceName, v.text)
+                        if (model.isAudioPlaying) {
+                            SpeechService.stopTextToSpeech()
+                        } else {
+                            scope.launch(Dispatchers.IO) {
+                                for (v in selectedVerses.sortedBy { it.verseIndex }) {
+                                    SpeechService.startTextToSpeech(model.bible.voiceName, v.text)
+                                }
                             }
                         }
-                    }
-                }) {
-                    Icon(
+                    }) {
+                        Icon(
 //                            modifier = Modifier.size(36.dp),
-                        imageVector = if (model.isAudioPlaying)
-                            Icons.Outlined.PauseCircle
-                        else
-                            Icons.Outlined.PlayCircle,
-                        contentDescription = "Audio",
-                    )
+                            imageVector = if (model.isAudioPlaying)
+                                Icons.Outlined.PauseCircle
+                            else
+                                Icons.Outlined.PlayCircle,
+                            contentDescription = "Audio",
+                        )
+                    }
                 }
                 IconButton(onClick = {
 //                    view.playSoundEffect(SoundEffectConstants.CLICK)

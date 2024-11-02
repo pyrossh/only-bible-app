@@ -1,10 +1,15 @@
 package dev.pyrossh.only_bible_app
 
-import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
-import dev.pyrossh.only_bible_app.domain.Verse
 
+
+enum class Platform {
+    Android,
+    IOS
+}
+
+expect fun getPlatform(): Platform
 
 @Composable
 expect fun getScreenWidth(): Dp

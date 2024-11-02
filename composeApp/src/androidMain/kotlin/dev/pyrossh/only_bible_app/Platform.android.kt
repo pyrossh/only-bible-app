@@ -25,6 +25,8 @@ import dev.pyrossh.only_bible_app.config.BuildKonfig
 import theme.darkScheme
 import theme.lightScheme
 
+actual fun getPlatform() = Platform.Android
+
 @Composable
 actual fun getScreenWidth(): Dp = LocalConfiguration.current.screenWidthDp.dp
 

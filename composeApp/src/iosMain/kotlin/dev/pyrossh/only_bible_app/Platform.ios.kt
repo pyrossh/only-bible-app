@@ -18,6 +18,8 @@ import theme.lightScheme
 
 //import platform.AVKit.Audio
 
+actual fun getPlatform() = Platform.IOS
+
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 actual fun getScreenWidth(): Dp = LocalWindowInfo.current.containerSize.width.pxToPoint().dp

@@ -5,9 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.russhwolf.settings.SharedPreferencesSettings
-import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
@@ -21,20 +19,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         ShareKit.setActivityProvider { return@setActivityProvider this }
-        if (savedInstanceState == null) {
-            lifecycleScope.launch {
-                model.loadData(settings)
-            }
-        }
         setContent {
-            App(model = model)
-        }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        lifecycleScope.launch {
-            model.saveData(settings)
+            App(model = model, settings = settings)
         }
     }
 }

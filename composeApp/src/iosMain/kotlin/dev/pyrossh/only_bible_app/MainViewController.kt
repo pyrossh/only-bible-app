@@ -10,21 +10,6 @@ import platform.Foundation.NSNotificationCenter
 val settings = NSUserDefaultsSettings.Factory().create()
 val model = AppViewModel()
 
-@OptIn(ExperimentalForeignApi::class)
-fun MainViewController() = ComposeUIViewController(configure = {
-    delegate = object : ComposeUIViewControllerDelegate {
-        override fun viewWillAppear(animated: Boolean) {
-            super.viewWillAppear(animated)
-            model.loadData(settings)
-            NSNotificationCenter.defaultCenter.addObserver(this)
-        }
-
-        override fun viewWillDisappear(animated: Boolean) {
-            super.viewWillDisappear(animated)
-            model.saveData(settings)
-
-        }
-    }
-}) {
-    App(model = model)
+fun MainViewController() = ComposeUIViewController() {
+    App(model = model, settings = settings)
 }
