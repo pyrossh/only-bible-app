@@ -91,6 +91,7 @@ class AppViewModel : ViewModel() {
     }
 
     fun loadData(s: Settings) {
+        println("loadData")
         viewModelScope.launch(Dispatchers.IO) {
             viewModelScope.launch(Dispatchers.Main) {
                 isLoading = true
@@ -121,6 +122,7 @@ class AppViewModel : ViewModel() {
 
     @OptIn(ExperimentalResourceApi::class)
     suspend fun loadBible(b: Bible) {
+        println("loadBible")
         try {
             val buffer = Res.readBytes("files/${b.filename()}.txt").decodeToString()
             val localVerses = buffer.split("\n").filter { it.isNotEmpty() }.map {
@@ -157,6 +159,7 @@ class AppViewModel : ViewModel() {
     }
 
     fun saveData(s: Settings) {
+        println("saveData")
         viewModelScope.launch(Dispatchers.IO) {
             s.putString("bible", bible.filename())
             s.putInt("bookIndex", bookIndex)
