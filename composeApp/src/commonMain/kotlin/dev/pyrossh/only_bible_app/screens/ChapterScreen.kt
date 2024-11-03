@@ -83,8 +83,6 @@ fun ChapterScreen(
     chapterIndex: Int,
     verseIndex: Int,
 ) {
-//    val view = LocalView.current
-//    val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val navController = LocalNavController.current
     var isSettingsShown by remember { mutableStateOf(false) }
